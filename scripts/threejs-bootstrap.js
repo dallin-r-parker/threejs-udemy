@@ -8,7 +8,7 @@ const rootPath = path.join(__dirname, "../");
 const bluePrintDirBase = "blueprint";
 let blueprintDirCount = 0;
 
-if (branchName.includes(bluePrintDirBase)) {
+if (branchName().includes(bluePrintDirBase)) {
   fs.readdir(rootPath, (err, files) => {
     //handling error
     if (err) return console.error(`issue scanning directory: ${err}`);
