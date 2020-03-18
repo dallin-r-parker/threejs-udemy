@@ -1,0 +1,23 @@
+{
+  "name": "threejs-udemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "newblueprint": "node ./scripts/threejs-bootstrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallin-r-parker/threejs-udemy.git"
+  },
+  "keywords": [],
+  "author": "Dallin parker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dallin-r-parker/threejs-udemy/issues"
+  },
+  "homepage": "https://github.com/dallin-r-parker/threejs-udemy#readme",
+  "devDependencies": {
+    "ncp": "^2.0.0"
+  }
+}
