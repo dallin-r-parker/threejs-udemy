@@ -1,37 +1,41 @@
 const fs = require("fs");
-const ncp = require("ncp").ncp;
 const path = require("path");
-//joining path of directory
+const ncp = require("ncp").ncp;
+//TODO: can remove this dependency by writing script that read ".git/HEAD" and parses out the branch ref
+const branchName = require("current-git-branch");
+
 const rootPath = path.join(__dirname, "../");
-console.log("rootPath: ", rootPath);
+const bluePrintDirBase = "blueprint";
 let blueprintDirCount = 0;
 
-fs.readdir(rootPath, function(err, files) {
-  //handling error
-  if (err) {
-    return console.log("Unable to scan directory: " + err);
-  }
-  //listing all files using forEach
-  files.forEach(function(file) {
-    const isDir = fs.lstatSync(`${rootPath}${file}`).isDirectory();
-    const bluePrintDir = file.includes("blueprint");
+if (branchName.includes(bluePrintDirBase)) {
+  fs.readdir(rootPath, (err, files) => {
+    //handling error
+    if (err) return console.error(`issue scanning directory: ${err}`);
 
-    if (isDir && bluePrintDir) {
-      const dirNum = Number(file[file.length - 1]);
-      blueprintDirCount =
-        dirNum > blueprintDirCount ? dirNum : blueprintDirCount;
-    }
+    //listing all files using forEach
+    files.forEach(function(file) {
+      const isDir = fs.lstatSync(`${rootPath}${file}`).isDirectory();
+      const bluePrintDir = file.includes(bluePrintDirBase);
+
+      if (isDir && bluePrintDir) {
+        const dirNum = Number(file[file.length - 1]);
+        blueprintDirCount =
+          dirNum > blueprintDirCount ? dirNum : blueprintDirCount;
+      }
+    });
+
+    createBluePrintDir();
   });
-  createBluePrintDir();
-});
 
-const createBluePrintDir = () => {
-  //move contents of "tmp" folder into root of project
-  const destination = `${rootPath}blueprint${++blueprintDirCount}`;
-  const source = path.join(__dirname, "tmp");
+  const createBluePrintDir = () => {
+    //move contents of "tmp" folder into root of project
+    const destination = `${rootPath}${bluePrintDirBase}${++blueprintDirCount}`;
+    const source = path.join(__dirname, "tmp");
 
-  ncp(source, destination, err => {
-    if (err) return console.error(err);
-    console.log(`done!: `);
-  });
-};
+    ncp(source, destination, err => {
+      if (err) return console.error(err);
+      console.log(`done!: `);
+    });
+  };
+}

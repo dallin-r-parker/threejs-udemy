@@ -18,6 +18,13 @@
   },
   "homepage": "https://github.com/dallin-r-parker/threejs-udemy#readme",
   "devDependencies": {
+    "current-git-branch": "^1.1.0",
+    "husky": "^4.2.3",
     "ncp": "^2.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "post-checkout": "npm run newblueprint"
+    }
   }
 }
