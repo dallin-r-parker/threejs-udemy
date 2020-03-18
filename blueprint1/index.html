@@ -8,3 +8,47 @@
   </head>
   <body></body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <title>Document</title>
+  </head>
+  <script>
+    let scene, camera, renderer;
+
+    let init = function() {
+      // create the scene
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xababab);
+
+      //create and locate the camera
+      camera = new THREE.PerspectiveCamera(
+        30,
+        window.innerWidth / window.innerHeight,
+        1,
+        1000
+      );
+      camera.position.z = 5;
+
+      //create the renderer
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+
+      document.body.appendChild(renderer.domElement);
+    };
+
+    // main animation loop - calls 50 - 60 in a second.
+    let mainLoop = function() {
+      console.log(`hellos: `);
+      renderer.render(scene, camera);
+      requestAnimationFrame(mainLoop);
+    };
+    //=====================================================
+    init();
+    mainLoop();
+  </script>
+</html>
